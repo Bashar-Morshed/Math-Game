@@ -32,10 +32,11 @@ class MainActivity : AppCompatActivity() {
         val txt2: TextView = findViewById(R.id.textView2)
         val txt3: TextView = findViewById(R.id.textView3)
 
-        val msg: String = "Enter the right numbers to complete the equations"
+
         var flag: String = "mathematical expressions"
         val intent = Intent(this, Inequality::class.java)
         val intent2 = Intent(this, Math::class.java)
+
 
 
 
@@ -59,7 +60,8 @@ class MainActivity : AppCompatActivity() {
                     dialog_var.show(supportFragmentManager, "Custom Dialog")
 
                     bt.setOnClickListener {
-                        intent2.putExtra("key", msg)
+                        val message: String = "Enter the right numbers to complete the equations"
+                        intent2.putExtra("key", message)
                         startActivity(intent2)
                     }
                 }

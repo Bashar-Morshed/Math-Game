@@ -42,12 +42,13 @@ class Math : AppCompatActivity() {
         val txt8: TextView = findViewById(R.id.textView8)
         val intent3 = Intent(this, MainActivity::class.java)
 
-        val txt13: TextView = findViewById(R.id.textView13)
+        val txt13: TextView = findViewById(R.id.tv13)
 
         val bundle: Bundle? = intent.extras
         bundle?.let {
-            val msg2 = bundle.getString("key")
-            txt13.setText(msg2)
+            val msg = bundle.getString("key")
+            txt13.setText(msg)
+
 
         }
 
