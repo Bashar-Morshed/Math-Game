@@ -26,19 +26,24 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        createNotificationChannel()
+
         val bt: Button = findViewById(R.id.button)
         val sp: Spinner = findViewById(R.id.spinner)
         val txt2: TextView = findViewById(R.id.textView2)
         val txt3: TextView = findViewById(R.id.textView3)
 
+        val msg: String = "Enter the right numbers to complete the equations"
         var flag: String = "mathematical expressions"
         val intent = Intent(this, Inequality::class.java)
         val intent2 = Intent(this, Math::class.java)
 
+
+
         bt.setText(res1)
         txt2.text = t2
         txt3.text = t3
+
+
 
         var options = arrayOf( "inequality expressions","mathematical expressions")
         sp.adapter = ArrayAdapter<String>(this, android.R.layout.simple_list_item_1, options)
@@ -49,12 +54,12 @@ class MainActivity : AppCompatActivity() {
 
                 if(flag == "mathematical expressions") {
 
+
                     var dialog_var = CustomDialogFragment()
                     dialog_var.show(supportFragmentManager, "Custom Dialog")
 
                     bt.setOnClickListener {
-
-                        intent2.putExtra("Key", exp)
+                        intent2.putExtra("key", msg)
                         startActivity(intent2)
                     }
                 }
@@ -79,37 +84,10 @@ class MainActivity : AppCompatActivity() {
 
 
 
-    }
-    private var notificationId1 :Int = 123
-    private val channelId = "App_Channel.testNotification"
-    private val description = "Trying to test different types notification"
 
-    private  fun notidication1(){
 
-        val builder = NotificationCompat.Builder(this, channelId)
-            .setSmallIcon(R.mipmap.l)
-            .setContentTitle("Math Game")
-            .setContentText("Hope you enjoyed the game and do not forget to play again")
-            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
 
-            .setAutoCancel(true)
-        with(NotificationManagerCompat.from(this)){
-            notify(notificationId1,builder.build())
-        }
-    }
 
-    private fun createNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            val name = "test_notification"
-            val descriptionText = description
-            val importance = NotificationManager.IMPORTANCE_DEFAULT
-            val channel = NotificationChannel(channelId, name, importance).apply {
-                description = descriptionText
-            }
-            val notificationManager: NotificationManager =
-                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
-            notificationManager.createNotificationChannel(channel)
-        }
     }
     fun receiveFeedback(feedback: String){
         exp = feedback
@@ -127,10 +105,7 @@ class MainActivity : AppCompatActivity() {
 
     }
 
-    override fun onStop() {
-        notidication1()
-        super.onStop()
-    }
+
 
 
 }

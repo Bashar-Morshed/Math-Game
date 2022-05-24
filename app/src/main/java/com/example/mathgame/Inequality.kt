@@ -1,12 +1,18 @@
 package com.example.mathgame
 
 import android.app.Activity
+import android.app.NotificationChannel
+import android.app.NotificationManager
 import android.app.PendingIntent.getActivity
+import android.content.Context
 import android.content.Intent
+import android.os.Build
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.Button
 import android.widget.EditText
+import androidx.core.app.NotificationCompat
+import androidx.core.app.NotificationManagerCompat
 import androidx.fragment.app.Fragment
 
 class Inequality : AppCompatActivity() {
@@ -14,6 +20,7 @@ class Inequality : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_inequality)
 
+        createNotificationChannel()
         val num1: Int = (0..100).random()
         val num2: Int = (0..100).random()
         val num3: Int = (0..100).random()
@@ -38,7 +45,7 @@ class Inequality : AppCompatActivity() {
 
             if (ed.text.toString().toInt() > ed3.text.toString().toInt()) {
                 if (ed4.text.toString().toInt() < ed5.text.toString().toInt()) {
-                    if (ed10.text.toString().toInt() == ed10.text.toString().toInt()) {
+                    if (ed10.text.toString().toInt() == ed11.text.toString().toInt()) {
                         res = true
                     }
                 }
@@ -66,4 +73,40 @@ class Inequality : AppCompatActivity() {
 
 
     }
+
+    private var notificationId1 :Int = 123
+    private val channelId = "App_Channel.testNotification"
+    private val description = "Trying to test different types notification"
+
+    private  fun notidication1(){
+
+        val builder = NotificationCompat.Builder(this, channelId)
+            .setSmallIcon(R.mipmap.l)
+            .setContentTitle("Math Game")
+            .setContentText("Hope you enjoyed the game and do not forget to play again")
+            .setPriority(NotificationCompat.PRIORITY_DEFAULT)
+
+            .setAutoCancel(true)
+        with(NotificationManagerCompat.from(this)){
+            notify(notificationId1,builder.build())
+        }
+    }
+
+    private fun createNotificationChannel() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            val name = "test_notification"
+            val descriptionText = description
+            val importance = NotificationManager.IMPORTANCE_DEFAULT
+            val channel = NotificationChannel(channelId, name, importance).apply {
+                description = descriptionText
+            }
+            val notificationManager: NotificationManager =
+                getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
+            notificationManager.createNotificationChannel(channel)
+        }
+    }
+        override fun onStop() {
+            notidication1()
+            super.onStop()
+        }
 }
